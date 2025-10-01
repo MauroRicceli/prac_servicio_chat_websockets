@@ -1,4 +1,4 @@
 /**
- * En este paquete se encuentran todos los controladores de la aplicacion.
+ * This package includes every controller used in this application.
  */
 package com.chatapp.chatapppractice.controllers;

@@ -1,4 +1,5 @@
 /**
- * Este paquete contiene los paquetes con las clases principales del proyecto.
+ * This package includes every important class used in this application.
  */
 package com.chatapp.chatapppractice;
+
