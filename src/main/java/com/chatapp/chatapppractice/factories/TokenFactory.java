@@ -1,4 +1,4 @@
-package com.chatapp.chatapppractice.models.factory;
+package com.chatapp.chatapppractice.factories;
 
 import com.chatapp.chatapppractice.models.entities.TokenEntity;
 import com.chatapp.chatapppractice.models.entities.UserEntity;

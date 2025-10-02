@@ -5,12 +5,11 @@ import com.chatapp.chatapppractice.models.dtos.LoginRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.RegisterRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.AuthResponseDTO;
 import com.chatapp.chatapppractice.models.entities.UserEntity;
-import com.chatapp.chatapppractice.models.factory.ResponseFactory;
-import com.chatapp.chatapppractice.models.factory.TokenFactory;
-import com.chatapp.chatapppractice.models.factory.UserFactory;
+import com.chatapp.chatapppractice.factories.ResponseFactory;
+import com.chatapp.chatapppractice.factories.TokenFactory;
+import com.chatapp.chatapppractice.factories.UserFactory;
 import com.chatapp.chatapppractice.repositories.TokenRepository;
 import com.chatapp.chatapppractice.repositories.UserRepository;
-import com.chatapp.chatapppractice.security.exceptions.LoginCredentialsDoesntMatchesException;
 import com.chatapp.chatapppractice.security.exceptions.UserAlreadyRegisteredException;
 import com.chatapp.chatapppractice.security.exceptions.UserDoesntExistsException;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +43,10 @@ public class AuthService {
      * Used to authenticate the users
      */
     private final AuthenticationManager authenticationManager;
+    /**
+     * Utility to create users from arguments or DTOs.
+     */
+    private final UserFactory userFactory;
 
     /**
      * Verify user existence in the DB and gets it.
@@ -83,7 +86,7 @@ public class AuthService {
             throw new UserAlreadyRegisteredException("The user " + registerRequestDTO.getEmail() + " is already registered in the app");
         }
 
-        UserEntity user = UserFactory.registerDTOToUserEntity(registerRequestDTO, encryptConfig.obtenerEncriptador().encode(registerRequestDTO.getPassword()));
+        UserEntity user = userFactory.registerDTOToUserEntity(registerRequestDTO);
 
         userRepository.save(user);
 
