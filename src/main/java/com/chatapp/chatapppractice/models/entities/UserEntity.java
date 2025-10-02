@@ -1,6 +1,6 @@
 package com.chatapp.chatapppractice.models.entities;
 
-import com.chatapp.chatapppractice.models.constants.UserConstants;
+import com.chatapp.chatapppractice.models.constants.UserValidations;
 import com.chatapp.chatapppractice.models.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -24,19 +24,19 @@ public class UserEntity {
     private Long id;
 
     @NotNull
-    @Size(min = UserConstants.MIN_SIZE_REAL_NAMES_USER, max = UserConstants.MAX_SIZE_REAL_NAMES_USER)
+    @Size(min = UserValidations.MIN_SIZE_REAL_NAMES_USER, max = UserValidations.MAX_SIZE_REAL_NAMES_USER)
     private String fullname;
 
     @NotNull
-    @Size(min = UserConstants.MIN_SIZE_REAL_NAMES_USER, max = UserConstants.MAX_SIZE_REAL_NAMES_USER)
+    @Size(min = UserValidations.MIN_SIZE_REAL_NAMES_USER, max = UserValidations.MAX_SIZE_REAL_NAMES_USER)
     private String firstname;
 
     @NotNull
-    @Size(min = UserConstants.MIN_SIZE_REAL_NAMES_USER, max = UserConstants.MAX_SIZE_REAL_NAMES_USER)
+    @Size(min = UserValidations.MIN_SIZE_REAL_NAMES_USER, max = UserValidations.MAX_SIZE_REAL_NAMES_USER)
     private String lastname;
 
     @NotNull
-    @Size(min = UserConstants.MIN_SIZE_USERNAME, max = UserConstants.MAX_SIZE_USERNAME)
+    @Size(min = UserValidations.MIN_SIZE_USERNAME, max = UserValidations.MAX_SIZE_USERNAME)
     private String username;
 
     private String password;

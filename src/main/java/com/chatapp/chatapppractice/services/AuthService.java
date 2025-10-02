@@ -1,6 +1,7 @@
 package com.chatapp.chatapppractice.services;
 
 import com.chatapp.chatapppractice.configs.EncryptConfig;
+import com.chatapp.chatapppractice.models.constants.ErrorMessages;
 import com.chatapp.chatapppractice.models.dtos.LoginRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.RegisterRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.AuthResponseDTO;
@@ -36,11 +37,7 @@ public class AuthService {
      */
     private final JWTService jwtService;
     /**
-     * Used to encrypt the password before converting the registerDTO to UserEntity.
-     */
-    private final EncryptConfig encryptConfig;
-    /**
-     * Used to authenticate the users
+     * Used to authenticate the users.
      */
     private final AuthenticationManager authenticationManager;
     /**
@@ -58,7 +55,7 @@ public class AuthService {
 
         Optional<UserEntity> user = userRepository.findByEmail(email);
         if (user.isEmpty()) {
-            throw new UserDoesntExistsException("User is not registered in the database");
+            throw new UserDoesntExistsException(ErrorMessages.USER_DOESNT_EXISTS);
         }
         return user.get();
     }
@@ -83,7 +80,7 @@ public class AuthService {
     public AuthResponseDTO register(final RegisterRequestDTO registerRequestDTO) {
 
         if (verifyUserExistence(registerRequestDTO.getEmail())) {
-            throw new UserAlreadyRegisteredException("The user " + registerRequestDTO.getEmail() + " is already registered in the app");
+            throw new UserAlreadyRegisteredException(ErrorMessages.USER_ALREADY_REGISTERED);
         }
 
         UserEntity user = userFactory.registerDTOToUserEntity(registerRequestDTO);
