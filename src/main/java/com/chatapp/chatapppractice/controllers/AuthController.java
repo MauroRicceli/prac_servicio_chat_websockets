@@ -1,7 +1,8 @@
 package com.chatapp.chatapppractice.controllers;
 
-import com.chatapp.chatapppractice.models.dtos.RegisterDTO;
-import com.chatapp.chatapppractice.models.dtos.RegisterResponseDTO;
+import com.chatapp.chatapppractice.models.dtos.LoginRequestDTO;
+import com.chatapp.chatapppractice.models.dtos.RegisterRequestDTO;
+import com.chatapp.chatapppractice.models.dtos.AuthResponseDTO;
 import com.chatapp.chatapppractice.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,13 +24,21 @@ public class AuthController {
 
     /**
      * Receives an DTO with the needed user data, registers the user if it doesn't exist and create his tokens.
-     * @param registerDTO with the needed user data
+     * @param registerRequestDTO with the needed user data
      * @return DTO with the user info and the generated tokens.
      */
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<RegisterResponseDTO> register(@RequestBody final RegisterDTO registerDTO) {
-        System.out.println(registerDTO);
-        return new ResponseEntity<>(authService.register(registerDTO), HttpStatus.CREATED);
+    public ResponseEntity<AuthResponseDTO> register(@RequestBody final RegisterRequestDTO registerRequestDTO) {
+        return new ResponseEntity<>(authService.register(registerRequestDTO), HttpStatus.CREATED);
     }
 
+    /**
+     * Receives an DTO with the needed user data, logins the user and refresh his tokens if exists and the credentials matches.
+     * @param loginRequestDTO with the needed user data.
+     * @return DTO with the user info and refreshed tokens.
+     */
+    @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody final LoginRequestDTO loginRequestDTO) {
+        return new ResponseEntity<>(authService.login(loginRequestDTO), HttpStatus.OK);
+    }
 }

@@ -1,14 +1,12 @@
 package com.chatapp.chatapppractice.models.entities;
 
-import com.chatapp.chatapppractice.constants.UserConstants;
+import com.chatapp.chatapppractice.models.constants.UserConstants;
 import com.chatapp.chatapppractice.models.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.security.core.userdetails.User;
 
 import java.sql.Timestamp;
 
@@ -20,6 +18,7 @@ import java.sql.Timestamp;
 @Builder
 @Entity
 public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -1,6 +1,8 @@
-package com.chatapp.chatapppractice.constants;
+package com.chatapp.chatapppractice.models.constants;
 
-public class UserConstants {
+public final class UserConstants {
+
+    private UserConstants() { };
 
     /**
      * Minimum size of the string for the real names of the user. Firstname, Lastname, Fullname.

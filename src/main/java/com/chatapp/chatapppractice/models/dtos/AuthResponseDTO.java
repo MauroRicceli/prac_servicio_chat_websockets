@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @Builder
-public class RegisterResponseDTO {
+public class AuthResponseDTO {
     @NotNull
     private Long id;
     @NotNull

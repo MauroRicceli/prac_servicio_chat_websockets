@@ -1,15 +1,21 @@
 package com.chatapp.chatapppractice.services;
 
-import com.chatapp.chatapppractice.mapper.UserMapper;
-import com.chatapp.chatapppractice.models.dtos.RegisterDTO;
-import com.chatapp.chatapppractice.models.dtos.RegisterResponseDTO;
-import com.chatapp.chatapppractice.models.entities.TokenEntity;
+import com.chatapp.chatapppractice.configs.EncryptConfig;
+import com.chatapp.chatapppractice.models.dtos.LoginRequestDTO;
+import com.chatapp.chatapppractice.models.dtos.RegisterRequestDTO;
+import com.chatapp.chatapppractice.models.dtos.AuthResponseDTO;
 import com.chatapp.chatapppractice.models.entities.UserEntity;
+import com.chatapp.chatapppractice.models.factory.ResponseFactory;
+import com.chatapp.chatapppractice.models.factory.TokenFactory;
+import com.chatapp.chatapppractice.models.factory.UserFactory;
 import com.chatapp.chatapppractice.repositories.TokenRepository;
 import com.chatapp.chatapppractice.repositories.UserRepository;
+import com.chatapp.chatapppractice.security.exceptions.LoginCredentialsDoesntMatchesException;
 import com.chatapp.chatapppractice.security.exceptions.UserAlreadyRegisteredException;
 import com.chatapp.chatapppractice.security.exceptions.UserDoesntExistsException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,13 +33,17 @@ public class AuthService {
      */
     private final TokenRepository tokenRepository;
     /**
-     * Utility to convert the user between DTO and Entity.
-     */
-    private final UserMapper userMapper;
-    /**
      *  Service to manage JWT Tokens.
      */
     private final JWTService jwtService;
+    /**
+     * Used to encrypt the password before converting the registerDTO to UserEntity.
+     */
+    private final EncryptConfig encryptConfig;
+    /**
+     * Used to authenticate the users
+     */
+    private final AuthenticationManager authenticationManager;
 
     /**
      * Verify user existence in the DB and gets it.
@@ -62,43 +72,48 @@ public class AuthService {
     }
 
     /**
-     * Registers the user in registerDTO if it doesn't exist already
-     * @param registerDTO with data of the user
-     * @throws UserAlreadyRegisteredException if the user it's already registered
+     * Registers the user in registerDTO if it doesn't exist already.
+     * @param registerRequestDTO with data of the user.
+     * @throws UserAlreadyRegisteredException if the user it's already registered.
      * @return DTO with information
      */
-    public RegisterResponseDTO register(final RegisterDTO registerDTO) {
+    public AuthResponseDTO register(final RegisterRequestDTO registerRequestDTO) {
 
-        if (verifyUserExistence(registerDTO.getEmail())) {
-            throw new UserAlreadyRegisteredException("The user " + registerDTO.getEmail() + " is already registered in the app");
+        if (verifyUserExistence(registerRequestDTO.getEmail())) {
+            throw new UserAlreadyRegisteredException("The user " + registerRequestDTO.getEmail() + " is already registered in the app");
         }
 
-        UserEntity user = userMapper.registerDTOToUser(registerDTO);
+        UserEntity user = UserFactory.registerDTOToUserEntity(registerRequestDTO, encryptConfig.obtenerEncriptador().encode(registerRequestDTO.getPassword()));
 
         userRepository.save(user);
 
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 
-        TokenEntity tkn = TokenEntity.builder()
-                .token(refreshToken)
-                .revoked(false)
-                .expirated(false)
-                .userOwner(user)
-                .build();
+        tokenRepository.save(TokenFactory.createTokenEntity(refreshToken, user));
 
-        System.out.println(tkn);
+        return ResponseFactory.createAuthResponse(user, refreshToken, accessToken);
+    }
 
-        tokenRepository.save(tkn);
+    /**
+     * Logs in the user in the DTO if it exists and his credentials matches.
+     * @param loginRequestDTO with data of the user.
+     * @return DTO with information
+     */
+    public AuthResponseDTO login(final LoginRequestDTO loginRequestDTO) {
 
-        return RegisterResponseDTO.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .userRole(user.getUserRole())
-                .username(user.getUsername())
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
+        UserEntity user = verifyUserExistenceAndGetIt(loginRequestDTO.getEmail());
+
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
+
+        tokenRepository.invalidateTokensByUserEmail(user.getEmail());
+
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
+
+        tokenRepository.save(TokenFactory.createTokenEntity(refreshToken, user));
+
+        return ResponseFactory.createAuthResponse(user, refreshToken, accessToken);
     }
 
 }

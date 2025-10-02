@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class RegisterDTO {
+public class RegisterRequestDTO {
 
     @NotNull
     @Size(min = 2)
