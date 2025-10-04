@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface TokenRepository extends JpaRepository<TokenEntity, Long> {
 
@@ -19,4 +21,21 @@ public interface TokenRepository extends JpaRepository<TokenEntity, Long> {
     @Transactional
     @Query("UPDATE TokenEntity t SET t.revoked = true, t.expired = true WHERE t.userOwner.email =:ownerEmail")
     void invalidateTokensByUserEmail(@Param("ownerEmail") String email);
+
+    /**
+     * This method invalidates the token sended.
+     * @param token wanted to invalidate.
+     */
+    @Modifying
+    @Transactional
+    @Query("UPDATE TokenEntity t SET t.revoked = true, t.expired = true WHERE t.token =:token")
+    void invalidateToken(@Param("token") String token);
+
+    /**
+     * This method obtains the token entity with this token.
+     * @param token of the entity.
+     * @return Optional with the entity inside, or an empty Optional.
+     */
+    Optional<TokenEntity> findByToken(String token);
+
 }

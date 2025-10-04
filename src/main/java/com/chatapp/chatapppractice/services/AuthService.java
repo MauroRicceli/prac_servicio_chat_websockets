@@ -1,10 +1,10 @@
 package com.chatapp.chatapppractice.services;
 
-import com.chatapp.chatapppractice.configs.EncryptConfig;
-import com.chatapp.chatapppractice.models.constants.ErrorMessages;
+import com.chatapp.chatapppractice.models.constants.ErrorMessagesConstants;
 import com.chatapp.chatapppractice.models.dtos.LoginRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.RegisterRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.AuthResponseDTO;
+import com.chatapp.chatapppractice.models.entities.TokenEntity;
 import com.chatapp.chatapppractice.models.entities.UserEntity;
 import com.chatapp.chatapppractice.factories.ResponseFactory;
 import com.chatapp.chatapppractice.factories.TokenFactory;
@@ -12,13 +12,12 @@ import com.chatapp.chatapppractice.factories.UserFactory;
 import com.chatapp.chatapppractice.repositories.TokenRepository;
 import com.chatapp.chatapppractice.repositories.UserRepository;
 import com.chatapp.chatapppractice.security.exceptions.UserAlreadyRegisteredException;
-import com.chatapp.chatapppractice.security.exceptions.UserDoesntExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -44,32 +43,10 @@ public class AuthService {
      * Utility to create users from arguments or DTOs.
      */
     private final UserFactory userFactory;
-
     /**
-     * Verify user existence in the DB and gets it.
-     * @param email of the user.
-     * @throws UserDoesntExistsException if the user isn't registered
-     * @return UserEntity
+     * Service to manage user verifications in db.
      */
-    private UserEntity verifyUserExistenceAndGetIt(final String email) {
-
-        Optional<UserEntity> user = userRepository.findByEmail(email);
-        if (user.isEmpty()) {
-            throw new UserDoesntExistsException(ErrorMessages.USER_DOESNT_EXISTS);
-        }
-        return user.get();
-    }
-
-    /**
-     * Verify user existence in the DB.
-     * @param email of the user.
-     * @return true or false if it doesn't exist.
-     */
-    private boolean verifyUserExistence(final String email) {
-
-        Optional<UserEntity> user = userRepository.findByEmail(email);
-        return user.isPresent();
-    }
+    private final UserVerificationService userVerificationService;
 
     /**
      * Registers the user in registerDTO if it doesn't exist already.
@@ -79,8 +56,8 @@ public class AuthService {
      */
     public AuthResponseDTO register(final RegisterRequestDTO registerRequestDTO) {
 
-        if (verifyUserExistence(registerRequestDTO.getEmail())) {
-            throw new UserAlreadyRegisteredException(ErrorMessages.USER_ALREADY_REGISTERED);
+        if (userVerificationService.verifyUserExistence(registerRequestDTO.getEmail())) {
+            throw new UserAlreadyRegisteredException(ErrorMessagesConstants.USER_ALREADY_REGISTERED);
         }
 
         UserEntity user = userFactory.registerDTOToUserEntity(registerRequestDTO);
@@ -102,7 +79,7 @@ public class AuthService {
      */
     public AuthResponseDTO login(final LoginRequestDTO loginRequestDTO) {
 
-        UserEntity user = verifyUserExistenceAndGetIt(loginRequestDTO.getEmail());
+        UserEntity user = userVerificationService.verifyUserExistenceAndGetIt(loginRequestDTO.getEmail());
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
 
@@ -110,6 +87,25 @@ public class AuthService {
 
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
+
+        tokenRepository.save(TokenFactory.createTokenEntity(refreshToken, user));
+
+        return ResponseFactory.createAuthResponse(user, refreshToken, accessToken);
+    }
+
+    /**
+     * Refreshes the tokens of the user in the refresh token granted if
+     * its valid, invalidates the old ones.
+     * @param authHeader header with the refresh token of the user.
+     * @return DTO with information
+     */
+    public AuthResponseDTO refreshToken(final String authHeader) {
+        UserEntity user = userVerificationService.obtainUserEntityFromSecurityContext();
+
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
+
+        tokenRepository.invalidateTokensByUserEmail(user.getEmail());
 
         tokenRepository.save(TokenFactory.createTokenEntity(refreshToken, user));
 

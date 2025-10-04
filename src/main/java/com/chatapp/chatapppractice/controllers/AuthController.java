@@ -4,13 +4,13 @@ import com.chatapp.chatapppractice.models.dtos.LoginRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.RegisterRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.AuthResponseDTO;
 import com.chatapp.chatapppractice.services.AuthService;
+import com.sun.net.httpserver.Headers;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -40,5 +40,18 @@ public class AuthController {
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody final LoginRequestDTO loginRequestDTO) {
         return new ResponseEntity<>(authService.login(loginRequestDTO), HttpStatus.OK);
+    }
+
+    /**
+     * Receives an authorization header with the token and the prefix. <br>
+     * Refreshes the tokens if it's everything okay. <br>
+     * Throws and exception if somemthing occurs.
+     * @param authHeader with the prefix and token.
+     * @return DTO with the user info and refreshed tokens.
+     */
+    @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
+    @GetMapping(value = "/refresh-tokens", produces = "application/json")
+    public ResponseEntity<AuthResponseDTO> refreshToken(@RequestHeader(HttpHeaders.AUTHORIZATION) final String authHeader) {
+        return new ResponseEntity<>(authService.refreshToken(authHeader), HttpStatus.OK);
     }
 }

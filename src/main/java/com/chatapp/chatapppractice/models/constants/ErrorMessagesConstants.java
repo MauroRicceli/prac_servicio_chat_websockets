@@ -1,8 +1,8 @@
 package com.chatapp.chatapppractice.models.constants;
 
-public final class ErrorMessages {
+public final class ErrorMessagesConstants {
 
-    private ErrorMessages() { };
+    private ErrorMessagesConstants() { };
 
     /**
      * Message for the login credentials error.

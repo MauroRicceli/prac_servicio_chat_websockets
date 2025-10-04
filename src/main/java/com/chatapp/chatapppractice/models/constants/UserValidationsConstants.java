@@ -1,8 +1,8 @@
 package com.chatapp.chatapppractice.models.constants;
 
-public final class UserValidations {
+public final class UserValidationsConstants {
 
-    private UserValidations() { };
+    private UserValidationsConstants() { };
 
     /**
      * Minimum size of the string for the real names of the user. Firstname, Lastname, Fullname.
@@ -15,9 +15,9 @@ public final class UserValidations {
     /**
      * Maximum size of the string for the real names of the user. Firstname, Lastname, Fullname.
      */
-    public static final int MAX_SIZE_REAL_NAMES_USER = 30;
+    public static final int MAX_SIZE_REAL_NAMES_USER = 70;
     /**
      * Maximum size of the string for the username of the user.
      */
-    public static final int MAX_SIZE_USERNAME = 100;
+    public static final int MAX_SIZE_USERNAME = 60;
 }
