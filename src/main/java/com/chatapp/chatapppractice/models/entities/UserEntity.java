@@ -42,6 +42,9 @@ public class UserEntity {
     @Size(min = UserValidationsConstants.MIN_SIZE_USERNAME, max = UserValidationsConstants.MAX_SIZE_USERNAME)
     private String username;
 
+    //Para obligar en un futuro a cambiar el nombre de usuario desde el frontend al crear un usuario por oauth2.
+    private boolean authModifiedUsername = false;
+
     private String password;
 
     @NotNull
@@ -49,9 +52,15 @@ public class UserEntity {
     @Column(unique = true)
     private String email;
 
+    private boolean verifiedEmail = false;
+
     private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
     private Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 
+    @NotNull
     private UserRole userRole;
+
+    @NotNull
+    private boolean auth2User;
 
 }

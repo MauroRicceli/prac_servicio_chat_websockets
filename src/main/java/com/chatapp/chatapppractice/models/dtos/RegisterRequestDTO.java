@@ -1,5 +1,6 @@
 package com.chatapp.chatapppractice.models.dtos;
 
+import com.chatapp.chatapppractice.models.constants.UserValidationsConstants;
 import com.chatapp.chatapppractice.models.enums.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -14,18 +15,17 @@ import lombok.*;
 public class RegisterRequestDTO {
 
     @NotNull
-    @Size(min = 2)
+    @Size(min = UserValidationsConstants.MIN_SIZE_REAL_NAMES_USER, max = UserValidationsConstants.MAX_SIZE_REAL_NAMES_USER)
     private String firstname;
 
     @NotNull
-    @Size(min = 2)
+    @Size(min = UserValidationsConstants.MIN_SIZE_REAL_NAMES_USER, max = UserValidationsConstants.MAX_SIZE_REAL_NAMES_USER)
     private String lastname;
 
     @NotNull
     @Email
     private String email;
 
-    @NotNull
     private String password;
 
     @NotNull
@@ -33,4 +33,5 @@ public class RegisterRequestDTO {
 
     @NotNull
     private String username;
+
 }

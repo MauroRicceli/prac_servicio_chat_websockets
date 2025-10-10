@@ -16,4 +16,5 @@ public final class ErrorMessagesConstants {
      * Message for the user doesn't exist error.
      */
     public static final String USER_DOESNT_EXISTS = "The email isn't registered";
+
 }

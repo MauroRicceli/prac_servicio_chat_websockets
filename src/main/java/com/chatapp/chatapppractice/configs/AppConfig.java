@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,7 +37,8 @@ public class AppConfig {
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             AuthFilter filterConfig,
-            AuthenticationProvider authenticationProvider
+            AuthenticationProvider authenticationProvider,
+            Auth2SuccessConfig auth2SuccessConfig
     ) throws Exception {
 
         http
@@ -46,7 +48,8 @@ public class AppConfig {
                         .permitAll()
                         .anyRequest()
                         .authenticated()
-                )
+                ).oauth2Login(oauth2 -> oauth2
+                        .successHandler(auth2SuccessConfig))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(filterConfig, UsernamePasswordAuthenticationFilter.class)

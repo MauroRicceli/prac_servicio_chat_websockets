@@ -13,7 +13,7 @@ public class LoginRequestDTO {
     @Email
     @NotNull
     private String email;
-
+    
     @NotNull
     private String password;
 }
