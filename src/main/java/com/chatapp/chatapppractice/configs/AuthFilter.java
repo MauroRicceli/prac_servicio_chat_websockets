@@ -2,7 +2,6 @@ package com.chatapp.chatapppractice.configs;
 
 import com.chatapp.chatapppractice.models.constants.HeaderConstants;
 import com.chatapp.chatapppractice.services.JWTService;
-import jakarta.persistence.Column;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

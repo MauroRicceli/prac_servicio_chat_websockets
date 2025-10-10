@@ -55,7 +55,6 @@ public class Auth2SuccessConfig implements AuthenticationSuccessHandler {
             authResponseDTO = authService.oAuth2Register(userInfo);
         }
 
-
         String json = String.format(
                 "{" + "\"id\": %d, "
                         + "\"email\": \"%s\", "
@@ -71,6 +70,9 @@ public class Auth2SuccessConfig implements AuthenticationSuccessHandler {
                 authResponseDTO.getAccessToken(),
                 authResponseDTO.getRefreshToken()
         );
+
+        response.setContentType("application/json");
+        response.getWriter().write(json);
     }
 }
 
