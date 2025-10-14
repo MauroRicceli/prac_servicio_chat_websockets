@@ -2,6 +2,7 @@ package com.chatapp.chatapppractice.models.entities;
 
 import com.chatapp.chatapppractice.models.enums.TokenType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -26,11 +27,10 @@ public class TokenEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
+    @NotBlank
     @Column(unique = true, length = MAX_LENGTH_TOKEN)
     private String token;
 
-    @NotNull
     private boolean revoked;
     private boolean expired;
 

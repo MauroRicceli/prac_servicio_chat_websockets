@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -25,5 +24,5 @@ public class FriendshipResponseDTO {
     /**
      * Set of the friendships of the user.
      */
-    private Set<Friend> friends = new HashSet<Friend>();
+    private Set<Friend> friends;
 }

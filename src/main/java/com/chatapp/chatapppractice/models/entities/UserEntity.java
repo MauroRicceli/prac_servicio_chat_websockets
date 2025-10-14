@@ -4,6 +4,7 @@ import com.chatapp.chatapppractice.models.constants.UserValidationsConstants;
 import com.chatapp.chatapppractice.models.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -26,19 +27,19 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
+    @NotBlank
     @Size(min = UserValidationsConstants.MIN_SIZE_REAL_NAMES_USER, max = UserValidationsConstants.MAX_SIZE_REAL_NAMES_USER)
     private String fullname;
 
-    @NotNull
+    @NotBlank
     @Size(min = UserValidationsConstants.MIN_SIZE_REAL_NAMES_USER, max = UserValidationsConstants.MAX_SIZE_REAL_NAMES_USER)
     private String firstname;
 
-    @NotNull
+    @NotBlank
     @Size(min = UserValidationsConstants.MIN_SIZE_REAL_NAMES_USER, max = UserValidationsConstants.MAX_SIZE_REAL_NAMES_USER)
     private String lastname;
 
-    @NotNull
+    @NotBlank
     @Size(min = UserValidationsConstants.MIN_SIZE_USERNAME, max = UserValidationsConstants.MAX_SIZE_USERNAME)
     private String username;
 
@@ -47,7 +48,7 @@ public class UserEntity {
 
     private String password;
 
-    @NotNull
+    @NotBlank
     @Email
     @Column(unique = true)
     private String email;
@@ -60,7 +61,6 @@ public class UserEntity {
     @NotNull
     private UserRole userRole;
 
-    @NotNull
     private boolean auth2User;
 
 }

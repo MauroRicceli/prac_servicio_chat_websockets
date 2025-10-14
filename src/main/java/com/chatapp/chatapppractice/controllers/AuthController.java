@@ -4,6 +4,7 @@ import com.chatapp.chatapppractice.models.dtos.authdtos.LoginRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.authdtos.RegisterRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.authdtos.AuthResponseDTO;
 import com.chatapp.chatapppractice.services.authentication.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class AuthController {
      * @return DTO with the user info and the generated tokens.
      */
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<AuthResponseDTO> register(@RequestBody final RegisterRequestDTO registerRequestDTO) {
+    public ResponseEntity<AuthResponseDTO> register(@Valid @RequestBody final RegisterRequestDTO registerRequestDTO) {
         return new ResponseEntity<>(authService.register(registerRequestDTO), HttpStatus.CREATED);
     }
 
@@ -37,7 +38,7 @@ public class AuthController {
      * @return DTO with the user info and refreshed tokens.
      */
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody final LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody final LoginRequestDTO loginRequestDTO) {
         return new ResponseEntity<>(authService.login(loginRequestDTO), HttpStatus.OK);
     }
 

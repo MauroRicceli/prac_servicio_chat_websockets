@@ -19,7 +19,7 @@ public class AuthHandler {
      */
     @ExceptionHandler(exception = UserDoesntExistsException.class)
     public ResponseEntity<String> handlerUserDoesntExistsException(final UserDoesntExistsException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -29,7 +29,7 @@ public class AuthHandler {
      */
     @ExceptionHandler(exception = UserAlreadyRegisteredException.class)
     public ResponseEntity<String> handlerUserAlreadyRegisteredException(final UserAlreadyRegisteredException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.chatapp.chatapppractice.models.entities;
 
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -21,12 +22,12 @@ public class FriendshipEntity {
     @Id
     private String id;
 
-    @NotNull
+    @NotBlank
     @Email
     @Indexed(unique = true)
     private String emailOwner;
 
-    @NotNull
+    @NotBlank
     private String usernameOwner;
 
     private Set<Friend> friendList = new HashSet<Friend>();
