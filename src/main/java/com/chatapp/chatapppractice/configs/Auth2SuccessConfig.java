@@ -1,11 +1,11 @@
 package com.chatapp.chatapppractice.configs;
 
-import com.chatapp.chatapppractice.models.Auth2UserInfo;
-import com.chatapp.chatapppractice.models.dtos.AuthResponseDTO;
+import com.chatapp.chatapppractice.models.auxiliars.Auth2UserInfo;
+import com.chatapp.chatapppractice.models.dtos.authdtos.AuthResponseDTO;
 
 import com.chatapp.chatapppractice.models.enums.UserRole;
-import com.chatapp.chatapppractice.services.AuthService;
-import com.chatapp.chatapppractice.services.UserVerificationService;
+import com.chatapp.chatapppractice.services.authentication.AuthService;
+import com.chatapp.chatapppractice.services.utils.UserVerificationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +49,7 @@ public class Auth2SuccessConfig implements AuthenticationSuccessHandler {
 
         AuthResponseDTO authResponseDTO;
 
-        if (userVerifService.verifyUserExistence(email)) {
+        if (userVerifService.verifyUserExistenceByEmail(email)) {
             authResponseDTO = authService.oAuth2Login(userInfo);
         } else {
             authResponseDTO = authService.oAuth2Register(userInfo);

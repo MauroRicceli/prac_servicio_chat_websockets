@@ -1,4 +1,4 @@
-package com.chatapp.chatapppractice.services;
+package com.chatapp.chatapppractice.services.utils;
 
 import com.chatapp.chatapppractice.models.constants.ErrorMessagesConstants;
 import com.chatapp.chatapppractice.models.entities.UserEntity;
@@ -24,11 +24,26 @@ public class UserVerificationService {
      * Verify user existence in the DB and gets it.
      * @param email of the user.
      * @throws UserDoesntExistsException if the user isn't registered
-     * @return UserEntity
+     * @return UserEntity with his data.
      */
-    public UserEntity verifyUserExistenceAndGetIt(final String email) {
+    public UserEntity verifyUserExistenceFromEmailAndGetIt(final String email) {
 
         Optional<UserEntity> user = userRepository.findByEmail(email);
+        if (user.isEmpty()) {
+            throw new UserDoesntExistsException(ErrorMessagesConstants.USER_DOESNT_EXISTS);
+        }
+        return user.get();
+    }
+
+    /**
+     * Verify user existence in the DB and gets it.
+     * @param id of the user.
+     * @throws UserDoesntExistsException if the user isn't registered
+     * @return UserEntity with his data.
+     */
+    public UserEntity verifyUserExistenceFromIDAndGetIt(final Long id) {
+
+        Optional<UserEntity> user = userRepository.findById(id);
         if (user.isEmpty()) {
             throw new UserDoesntExistsException(ErrorMessagesConstants.USER_DOESNT_EXISTS);
         }
@@ -40,9 +55,19 @@ public class UserVerificationService {
      * @param email of the user.
      * @return true or false if it doesn't exist.
      */
-    public boolean verifyUserExistence(final String email) {
+    public boolean verifyUserExistenceByEmail(final String email) {
 
         Optional<UserEntity> user = userRepository.findByEmail(email);
+        return user.isPresent();
+    }
+
+    /**
+     * Verify user existence in the DB.
+     * @param id of the user.
+     * @return true or false if it doesn't exist.
+     */
+    public boolean verifyUserExistenceByID(final Long id) {
+        Optional<UserEntity> user = userRepository.findById(id);
         return user.isPresent();
     }
 
@@ -53,7 +78,7 @@ public class UserVerificationService {
     public UserEntity obtainUserEntityFromSecurityContext() {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return verifyUserExistenceAndGetIt(user.getUsername());
+        return verifyUserExistenceFromEmailAndGetIt(user.getUsername());
 
     }
 }

@@ -1,10 +1,9 @@
 package com.chatapp.chatapppractice.controllers;
 
-import com.chatapp.chatapppractice.models.dtos.LoginRequestDTO;
-import com.chatapp.chatapppractice.models.dtos.RegisterRequestDTO;
-import com.chatapp.chatapppractice.models.dtos.AuthResponseDTO;
-import com.chatapp.chatapppractice.services.AuthService;
-import com.sun.net.httpserver.Headers;
+import com.chatapp.chatapppractice.models.dtos.authdtos.LoginRequestDTO;
+import com.chatapp.chatapppractice.models.dtos.authdtos.RegisterRequestDTO;
+import com.chatapp.chatapppractice.models.dtos.authdtos.AuthResponseDTO;
+import com.chatapp.chatapppractice.services.authentication.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

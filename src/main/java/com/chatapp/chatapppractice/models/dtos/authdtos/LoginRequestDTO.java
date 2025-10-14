@@ -1,4 +1,4 @@
-package com.chatapp.chatapppractice.models.dtos;
+package com.chatapp.chatapppractice.models.dtos.authdtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

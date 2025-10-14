@@ -1,6 +1,8 @@
 package com.chatapp.chatapppractice.factories;
 
-import com.chatapp.chatapppractice.models.dtos.AuthResponseDTO;
+import com.chatapp.chatapppractice.models.dtos.authdtos.AuthResponseDTO;
+import com.chatapp.chatapppractice.models.dtos.userinteractiondtos.FriendshipResponseDTO;
+import com.chatapp.chatapppractice.models.entities.FriendshipEntity;
 import com.chatapp.chatapppractice.models.entities.UserEntity;
 
 
@@ -9,7 +11,7 @@ public final class ResponseFactory {
     private ResponseFactory() { };
 
     /**
-     * This method created a new AuthResponseDTO with all the given info.
+     * This method creates a new AuthResponseDTO with all the given info.
      * @param user that interacted with the endpoint.
      * @param refreshToken generated for the user.
      * @param accessToken generated for the user.
@@ -23,6 +25,20 @@ public final class ResponseFactory {
                 .username(user.getUsername())
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .build();
+    }
+
+    /**
+     * This method creates a new FriendshipResponseDTO with all the given info.
+     * @param user Entity with all the user data.
+     * @param friendships Entity with all the friendships data of that user.
+     * @return FriendshipResponseDTO with all the needed info.
+     */
+    public static FriendshipResponseDTO createFriendshipResponse(final UserEntity user, final FriendshipEntity friendships) {
+        return FriendshipResponseDTO.builder()
+                .id(user.getId().toString())
+                .email(user.getEmail())
+                .friends(friendships.getFriendList())
                 .build();
     }
 }

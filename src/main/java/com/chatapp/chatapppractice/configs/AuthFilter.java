@@ -1,7 +1,7 @@
 package com.chatapp.chatapppractice.configs;
 
 import com.chatapp.chatapppractice.models.constants.HeaderConstants;
-import com.chatapp.chatapppractice.services.JWTService;
+import com.chatapp.chatapppractice.services.authentication.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

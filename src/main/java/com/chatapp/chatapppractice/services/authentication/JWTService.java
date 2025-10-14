@@ -1,4 +1,4 @@
-package com.chatapp.chatapppractice.services;
+package com.chatapp.chatapppractice.services.authentication;
 
 import com.chatapp.chatapppractice.models.constants.HeaderConstants;
 import com.chatapp.chatapppractice.models.constants.TokenConstants;
@@ -7,6 +7,7 @@ import com.chatapp.chatapppractice.models.entities.UserEntity;
 import com.chatapp.chatapppractice.models.enums.UserRole;
 import com.chatapp.chatapppractice.repositories.TokenRepository;
 import com.chatapp.chatapppractice.repositories.UserRepository;
+import com.chatapp.chatapppractice.services.utils.UserVerificationService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -118,7 +119,7 @@ public class JWTService {
     public boolean isRefreshTokenValid(final String token) {
         if (areTokenClaimsValid(token)) {
             final UserDetails usrDetails = userDetailsService.loadUserByUsername(extractTokenUsername(token));
-            final UserEntity usr = userVerificationService.verifyUserExistenceAndGetIt(usrDetails.getUsername());
+            final UserEntity usr = userVerificationService.verifyUserExistenceFromEmailAndGetIt(usrDetails.getUsername());
 
             if (!usr.getUsername().equals(extractTokenAppUsername(token)) && !usr.getUserRole().toString().equals(extractTokenUserRole(token))) {
                 return false;

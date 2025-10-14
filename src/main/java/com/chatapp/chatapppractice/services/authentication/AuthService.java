@@ -1,11 +1,10 @@
-package com.chatapp.chatapppractice.services;
+package com.chatapp.chatapppractice.services.authentication;
 
-import com.chatapp.chatapppractice.models.Auth2UserInfo;
+import com.chatapp.chatapppractice.models.auxiliars.Auth2UserInfo;
 import com.chatapp.chatapppractice.models.constants.ErrorMessagesConstants;
-import com.chatapp.chatapppractice.models.dtos.LoginRequestDTO;
-import com.chatapp.chatapppractice.models.dtos.RegisterRequestDTO;
-import com.chatapp.chatapppractice.models.dtos.AuthResponseDTO;
-import com.chatapp.chatapppractice.models.entities.TokenEntity;
+import com.chatapp.chatapppractice.models.dtos.authdtos.LoginRequestDTO;
+import com.chatapp.chatapppractice.models.dtos.authdtos.RegisterRequestDTO;
+import com.chatapp.chatapppractice.models.dtos.authdtos.AuthResponseDTO;
 import com.chatapp.chatapppractice.models.entities.UserEntity;
 import com.chatapp.chatapppractice.factories.ResponseFactory;
 import com.chatapp.chatapppractice.factories.TokenFactory;
@@ -14,15 +13,11 @@ import com.chatapp.chatapppractice.repositories.TokenRepository;
 import com.chatapp.chatapppractice.repositories.UserRepository;
 import com.chatapp.chatapppractice.security.exceptions.UserAlreadyRegisteredException;
 import com.chatapp.chatapppractice.security.exceptions.UserDoesntExistsException;
+import com.chatapp.chatapppractice.services.utils.UserVerificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.lang.constant.Constable;
 
 @RequiredArgsConstructor
 @Service
@@ -61,7 +56,7 @@ public class AuthService {
      */
     public AuthResponseDTO register(final RegisterRequestDTO registerRequestDTO) {
 
-        if (userVerificationService.verifyUserExistence(registerRequestDTO.getEmail())) {
+        if (userVerificationService.verifyUserExistenceByEmail(registerRequestDTO.getEmail())) {
             throw new UserAlreadyRegisteredException(ErrorMessagesConstants.USER_ALREADY_REGISTERED);
         }
 
@@ -103,7 +98,7 @@ public class AuthService {
      */
     public AuthResponseDTO login(final LoginRequestDTO loginRequestDTO) {
 
-        UserEntity user = userVerificationService.verifyUserExistenceAndGetIt(loginRequestDTO.getEmail());
+        UserEntity user = userVerificationService.verifyUserExistenceFromEmailAndGetIt(loginRequestDTO.getEmail());
 
         if (user.isAuth2User()) {
             throw new UserDoesntExistsException(ErrorMessagesConstants.PASSWORD_DOESNT_MATCH); //enrealidad es de oAuth2, pero no informar de eso en UX.

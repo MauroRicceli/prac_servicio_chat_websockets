@@ -1,4 +1,4 @@
-package com.chatapp.chatapppractice.models.dtos;
+package com.chatapp.chatapppractice.models.dtos.authdtos;
 
 import com.chatapp.chatapppractice.models.constants.UserValidationsConstants;
 import com.chatapp.chatapppractice.models.enums.UserRole;

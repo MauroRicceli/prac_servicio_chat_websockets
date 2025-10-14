@@ -1,11 +1,16 @@
 package com.chatapp.chatapppractice.factories;
 
 import com.chatapp.chatapppractice.configs.EncryptConfig;
-import com.chatapp.chatapppractice.models.Auth2UserInfo;
-import com.chatapp.chatapppractice.models.dtos.RegisterRequestDTO;
+import com.chatapp.chatapppractice.models.auxiliars.Auth2UserInfo;
+import com.chatapp.chatapppractice.models.dtos.authdtos.RegisterRequestDTO;
+import com.chatapp.chatapppractice.models.entities.Friend;
+import com.chatapp.chatapppractice.models.entities.FriendshipEntity;
 import com.chatapp.chatapppractice.models.entities.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.time.Instant;
+import java.util.HashSet;
 
 @RequiredArgsConstructor
 @Component
@@ -54,6 +59,31 @@ public class UserFactory {
                 .password(auth2UserInfo.getPassword())
                 .username(auth2UserInfo.getFullname())
                 .auth2User(true)
+                .build();
+    }
+
+    /**
+     * Creates a friend class with the user entity data.
+     * @param userEntity Entity with the user data.
+     * @return Friend class created with the data.
+     */
+    public Friend userEntityToFriend(final UserEntity userEntity) {
+        return Friend.builder()
+                .id(userEntity.getId().toString())
+                .email(userEntity.getEmail()).username(userEntity.getUsername()).friendshipStarted(Instant.now())
+                .build();
+    }
+
+    /**
+     * Creates a friendship entity with the user entity data.
+     * @param userEntity Entity with the user data.
+     * @return Friendship entity with the data.
+     */
+    public FriendshipEntity userEntityToFriendship(final UserEntity userEntity) {
+        return FriendshipEntity.builder()
+                .emailOwner(userEntity.getEmail())
+                .usernameOwner(userEntity.getUsername())
+                .friendList(new HashSet<Friend>())
                 .build();
     }
 }
