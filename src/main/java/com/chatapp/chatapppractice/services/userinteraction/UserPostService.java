@@ -24,7 +24,7 @@ import java.util.List;
 public class UserPostService {
 
     /**
-     * Service with all the methods needed to manage user verifications.
+     * Service with all the methods needed to manage user actions verifications.
      */
     private final UserVerificationService userVerificationService;
     /**
@@ -38,7 +38,7 @@ public class UserPostService {
     private final PostRepository postRepository;
 
     /**
-     * This method creates a new post associated with the active user.
+     * This method creates a new post associated with the active useractions.
      * @param createPostDTO with all the needed info.
      * @return DTO with the data of the created post.
      */
@@ -55,9 +55,9 @@ public class UserPostService {
     }
 
     /**
-     * This method deletes the selected post if it belongs to the active user.
+     * This method deletes the selected post if it belongs to the active useractions.
      * @param idPost id of the selected post to delete.
-     * @throws UnauthorizedActionOnPostException if the active user isn't the owner of the post.
+     * @throws UnauthorizedActionOnPostException if the active useractions isn't the owner of the post.
      * @throws PostDoesntExistsException if the post doesn't exist.
      * @return DTO with the data of the deleted post.
      */
@@ -76,10 +76,10 @@ public class UserPostService {
     }
 
     /**
-     * This method modifies the selected post if it belongs to the active user.
+     * This method modifies the selected post if it belongs to the active useractions.
      * @param idPost id of the post wanted to modify.
      * @param modifyPostDTO DTO with the data to modify that post.
-     * @throws UnauthorizedActionOnPostException if the active user isn't the owner of the post.
+     * @throws UnauthorizedActionOnPostException if the active useractions isn't the owner of the post.
      * @throws PostDoesntExistsException if the post doesn't exist.
      * @return DTO with the data of the new modified post
      */
@@ -102,7 +102,7 @@ public class UserPostService {
     }
 
     /**
-     * Gets all the posts of the active user.
+     * Gets all the posts of the active useractions.
      * @return a list of DTOs with every post info.
      */
     public List<PostResponseDTO> getUserPosts() {

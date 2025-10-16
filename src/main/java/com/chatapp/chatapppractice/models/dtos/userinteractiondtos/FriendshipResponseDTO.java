@@ -1,6 +1,6 @@
 package com.chatapp.chatapppractice.models.dtos.userinteractiondtos;
 
-import com.chatapp.chatapppractice.models.entities.Friend;
+import com.chatapp.chatapppractice.models.entities.auxiliars.Friend;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class FriendshipResponseDTO {
      */
     private String email;
     /**
-     * Set of the friendships of the user.
+     * Set of the friendships of the useractions.
      */
     private Set<Friend> friends;
 }

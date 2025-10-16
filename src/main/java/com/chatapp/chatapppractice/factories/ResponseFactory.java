@@ -13,8 +13,8 @@ public final class ResponseFactory {
     /**
      * This method creates a new AuthResponseDTO with all the given info.
      * @param user that interacted with the endpoint.
-     * @param refreshToken generated for the user.
-     * @param accessToken generated for the user.
+     * @param refreshToken generated for the useractions.
+     * @param accessToken generated for the useractions.
      * @return AuthResponseDTO with all the needed info.
      */
     public static AuthResponseDTO createAuthResponse(final UserEntity user, final String refreshToken, final String accessToken) {
@@ -30,8 +30,8 @@ public final class ResponseFactory {
 
     /**
      * This method creates a new FriendshipResponseDTO with all the given info.
-     * @param user Entity with all the user data.
-     * @param friendships Entity with all the friendships data of that user.
+     * @param user Entity with all the useractions data.
+     * @param friendships Entity with all the friendships data of that useractions.
      * @return FriendshipResponseDTO with all the needed info.
      */
     public static FriendshipResponseDTO createFriendshipResponse(final UserEntity user, final FriendshipEntity friendships) {

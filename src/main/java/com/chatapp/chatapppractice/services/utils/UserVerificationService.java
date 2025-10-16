@@ -21,9 +21,9 @@ public class UserVerificationService {
     private final UserRepository userRepository;
 
     /**
-     * Verify user existence in the DB and gets it.
-     * @param email of the user.
-     * @throws UserDoesntExistsException if the user isn't registered
+     * Verify useractions existence in the DB and gets it.
+     * @param email of the useractions.
+     * @throws UserDoesntExistsException if the useractions isn't registered
      * @return UserEntity with his data.
      */
     public UserEntity verifyUserExistenceFromEmailAndGetIt(final String email) {
@@ -36,9 +36,9 @@ public class UserVerificationService {
     }
 
     /**
-     * Verify user existence in the DB and gets it.
-     * @param id of the user.
-     * @throws UserDoesntExistsException if the user isn't registered
+     * Verify useractions existence in the DB and gets it.
+     * @param id of the useractions.
+     * @throws UserDoesntExistsException if the useractions isn't registered
      * @return UserEntity with his data.
      */
     public UserEntity verifyUserExistenceFromIDAndGetIt(final Long id) {
@@ -51,8 +51,8 @@ public class UserVerificationService {
     }
 
     /**
-     * Verify user existence in the DB.
-     * @param email of the user.
+     * Verify useractions existence in the DB.
+     * @param email of the useractions.
      * @return true or false if it doesn't exist.
      */
     public boolean verifyUserExistenceByEmail(final String email) {
@@ -62,8 +62,8 @@ public class UserVerificationService {
     }
 
     /**
-     * Verify user existence in the DB.
-     * @param id of the user.
+     * Verify useractions existence in the DB.
+     * @param id of the useractions.
      * @return true or false if it doesn't exist.
      */
     public boolean verifyUserExistenceByID(final Long id) {
@@ -72,7 +72,7 @@ public class UserVerificationService {
     }
 
     /**
-     * Obtains the user entity of the DB associated with the one in the security context.
+     * Obtains the useractions entity of the DB associated with the one in the security context.
      * @return the entity or exception if it doesn't exist somehow.
      */
     public UserEntity obtainUserEntityFromSecurityContext() {

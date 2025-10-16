@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 public interface FriendshipRepository extends MongoRepository<FriendshipEntity, String> {
 
     /**
-     * Finds the document of the user friends by his email.
+     * Finds the document of the useractions friends by his email.
      * @return Entity representing that document.
      */
     FriendshipEntity findByEmailOwner(String emailOwner);

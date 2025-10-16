@@ -4,7 +4,7 @@ import com.chatapp.chatapppractice.factories.ResponseFactory;
 import com.chatapp.chatapppractice.factories.UserFactory;
 import com.chatapp.chatapppractice.models.constants.ErrorMessagesConstants;
 import com.chatapp.chatapppractice.models.dtos.userinteractiondtos.FriendshipResponseDTO;
-import com.chatapp.chatapppractice.models.entities.Friend;
+import com.chatapp.chatapppractice.models.entities.auxiliars.Friend;
 import com.chatapp.chatapppractice.models.entities.FriendshipEntity;
 import com.chatapp.chatapppractice.models.entities.UserEntity;
 import com.chatapp.chatapppractice.repositories.FriendshipRepository;
@@ -26,14 +26,14 @@ public class UserFriendshipService {
     private final UserFactory userFactory;
 
     /**
-     * Service with utils for user management.
+     * Service with utils for useractions management.
      */
     private final UserVerificationService userVerificationService;
 
     /**
      * This method adds a new friend if they are not already, and removes the friendship if they were.
-     * @param idSelectedUser id of the added user.
-     * @throws UserDoesntExistsException if the user trying to manage doesn't exist.
+     * @param idSelectedUser id of the added useractions.
+     * @throws UserDoesntExistsException if the useractions trying to manage doesn't exist.
      * @return DTO with info.
      */
     public FriendshipResponseDTO manageFriends(final Long idSelectedUser) {
@@ -58,10 +58,10 @@ public class UserFriendshipService {
     }
 
     /**
-     * This method adds a new friend to the active user.
-     * @param idSelectedUser id of the added user.
-     * @param friendships friendships of the active user.
-     * @param userOwner active user.
+     * This method adds a new friend to the active useractions.
+     * @param idSelectedUser id of the added useractions.
+     * @param friendships friendships of the active useractions.
+     * @param userOwner active useractions.
      * @return DTO with info.
      */
     public FriendshipResponseDTO addFriend(final Long idSelectedUser, final FriendshipEntity friendships, final UserEntity userOwner) {
@@ -74,10 +74,10 @@ public class UserFriendshipService {
     }
 
     /**
-     * This method removes an existing friendship from the active user.
-     * @param idSelectedUser id of the removed user.
-     * @param friendships friendships of the active user.
-     * @param userOwner active user.
+     * This method removes an existing friendship from the active useractions.
+     * @param idSelectedUser id of the removed useractions.
+     * @param friendships friendships of the active useractions.
+     * @param userOwner active useractions.
      * @return DTO with info.
      */
     public FriendshipResponseDTO removeFriend(final Long idSelectedUser, final FriendshipEntity friendships, final UserEntity userOwner) {

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class AuthHandler {
 
     /**
-     * This exception gets threw when a user doesn't exist in the database.
+     * This exception gets threw when a useractions doesn't exist in the database.
      * @param e Message of the exception
      * @return Response entity with the message and the HTTP Code
      */
@@ -23,7 +23,7 @@ public class AuthHandler {
     }
 
     /**
-     * This exception gets threw when a user exist in the database and its trying to register again.
+     * This exception gets threw when a useractions exist in the database and its trying to register again.
      * @param e Message of the exception
      * @return Response entity with the message and the HTTP Code
      */
@@ -33,7 +33,7 @@ public class AuthHandler {
     }
 
     /**
-     * This exception gets threw when a user tries to log in with an incorrect credential.
+     * This exception gets threw when a useractions tries to log in with an incorrect credential.
      * @param e Message of the exception
      * @return Response entity with the message and the HTTP Code
      */

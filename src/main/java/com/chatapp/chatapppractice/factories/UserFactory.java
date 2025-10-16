@@ -1,9 +1,9 @@
 package com.chatapp.chatapppractice.factories;
 
 import com.chatapp.chatapppractice.configs.EncryptConfig;
-import com.chatapp.chatapppractice.models.auxiliars.Auth2UserInfo;
+import com.chatapp.chatapppractice.models.utils.Auth2UserInfo;
 import com.chatapp.chatapppractice.models.dtos.authdtos.RegisterRequestDTO;
-import com.chatapp.chatapppractice.models.entities.Friend;
+import com.chatapp.chatapppractice.models.entities.auxiliars.Friend;
 import com.chatapp.chatapppractice.models.entities.FriendshipEntity;
 import com.chatapp.chatapppractice.models.entities.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +22,8 @@ public class UserFactory {
     private final EncryptConfig encryptConfig;
 
     /**
-     * Creates the user entity with the registerDTO data, hashes the password.
-     * @param registerRequestDTO DTO with the user data.
+     * Creates the useractions entity with the registerDTO data, hashes the password.
+     * @param registerRequestDTO DTO with the useractions data.
      * @return UserEntity created with that data.
      */
     public UserEntity registerDTOToUserEntity(final RegisterRequestDTO registerRequestDTO) {
@@ -43,8 +43,8 @@ public class UserFactory {
     }
 
     /**
-     * Creates the user entity with the auth2UserInfo data.
-     * @param auth2UserInfo Class with the user data.
+     * Creates the useractions entity with the auth2UserInfo data.
+     * @param auth2UserInfo Class with the useractions data.
      * @return UserEntity created with that data.
      */
     public UserEntity auth2UserInfoToUserEntity(final Auth2UserInfo auth2UserInfo) {
@@ -63,8 +63,8 @@ public class UserFactory {
     }
 
     /**
-     * Creates a friend class with the user entity data.
-     * @param userEntity Entity with the user data.
+     * Creates a friend class with the useractions entity data.
+     * @param userEntity Entity with the useractions data.
      * @return Friend class created with the data.
      */
     public Friend userEntityToFriend(final UserEntity userEntity) {
@@ -75,8 +75,8 @@ public class UserFactory {
     }
 
     /**
-     * Creates a friendship entity with the user entity data.
-     * @param userEntity Entity with the user data.
+     * Creates a friendship entity with the useractions entity data.
+     * @param userEntity Entity with the useractions data.
      * @return Friendship entity with the data.
      */
     public FriendshipEntity userEntityToFriendship(final UserEntity userEntity) {

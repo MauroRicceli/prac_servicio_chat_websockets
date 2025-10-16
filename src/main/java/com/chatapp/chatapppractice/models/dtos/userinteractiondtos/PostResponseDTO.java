@@ -1,7 +1,7 @@
 package com.chatapp.chatapppractice.models.dtos.userinteractiondtos;
 
-import com.chatapp.chatapppractice.models.entities.UserComment;
-import com.chatapp.chatapppractice.models.entities.UserLike;
+import com.chatapp.chatapppractice.models.entities.auxiliars.UserComment;
+import com.chatapp.chatapppractice.models.entities.auxiliars.UserLike;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -1,6 +1,6 @@
 package com.chatapp.chatapppractice.configs;
 
-import com.chatapp.chatapppractice.models.auxiliars.Auth2UserInfo;
+import com.chatapp.chatapppractice.models.utils.Auth2UserInfo;
 import com.chatapp.chatapppractice.models.dtos.authdtos.AuthResponseDTO;
 
 import com.chatapp.chatapppractice.models.enums.UserRole;

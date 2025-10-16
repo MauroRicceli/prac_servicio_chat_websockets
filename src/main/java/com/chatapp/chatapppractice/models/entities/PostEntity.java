@@ -1,6 +1,8 @@
 package com.chatapp.chatapppractice.models.entities;
 
 import com.chatapp.chatapppractice.models.constants.PostConstants;
+import com.chatapp.chatapppractice.models.entities.auxiliars.UserComment;
+import com.chatapp.chatapppractice.models.entities.auxiliars.UserLike;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.*;

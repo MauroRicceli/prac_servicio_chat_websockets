@@ -14,8 +14,8 @@ import java.util.Optional;
 public interface TokenRepository extends JpaRepository<TokenEntity, Long> {
 
     /**
-     * This method invalidated all the tokens owned by a user, using his email.
-     * @param email of the user.
+     * This method invalidated all the tokens owned by a useractions, using his email.
+     * @param email of the useractions.
      */
     @Modifying
     @Transactional

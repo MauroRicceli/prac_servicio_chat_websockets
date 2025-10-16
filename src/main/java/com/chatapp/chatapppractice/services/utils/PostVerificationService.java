@@ -4,12 +4,16 @@ import com.chatapp.chatapppractice.models.constants.ErrorMessagesConstants;
 import com.chatapp.chatapppractice.models.constants.PostConstants;
 import com.chatapp.chatapppractice.models.entities.PostEntity;
 import com.chatapp.chatapppractice.models.entities.UserEntity;
+import com.chatapp.chatapppractice.models.entities.auxiliars.UserComment;
 import com.chatapp.chatapppractice.models.enums.UserRole;
 import com.chatapp.chatapppractice.repositories.PostRepository;
+import com.chatapp.chatapppractice.security.exceptions.CommentDoesntExistsException;
 import com.chatapp.chatapppractice.security.exceptions.PostDoesntExistsException;
 import com.chatapp.chatapppractice.security.exceptions.UnauthorizedActionOnPostException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -45,6 +49,27 @@ public class PostVerificationService {
 
         if (!post.getIdUserOwner().equals(user.getId().toString())) {
             throw new UnauthorizedActionOnPostException(ErrorMessagesConstants.UNAUTHORIZED_ON_POST_ACTION);
+        }
+    }
+
+    /**
+     * Verifies that the comment exists in the selected post, and gets it.
+     * @param post Entity of the post with all the info.
+     * @param commentId id of the comment wanted to verify.
+     * @throws CommentDoesntExistsException if it doesn't exist in the selected post.
+     * @return UserComment with that id if it exists.
+     */
+    public UserComment verifyPostCommentExistenceAndGetIt(final PostEntity post, final String commentId) {
+
+        Optional<UserComment> comment = post.getUserComments()
+                .stream()
+                .filter(userComment -> userComment.getId().equals(commentId))
+                .findFirst();
+
+        if (comment.isEmpty()) {
+            throw new CommentDoesntExistsException(ErrorMessagesConstants.COMMENT_DOESNT_EXISTS);
+        } else {
+            return comment.get();
         }
     }
 }

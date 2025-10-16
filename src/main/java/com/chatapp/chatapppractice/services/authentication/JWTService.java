@@ -55,8 +55,8 @@ public class JWTService {
     private UserDetailsService userDetailsService;
 
     /**
-     * Returns a new access token for the user.
-     * @param user Entity of the user.
+     * Returns a new access token for the useractions.
+     * @param user Entity of the useractions.
      * @return generated access token.
      */
     public String generateAccessToken(final UserEntity user) {
@@ -64,8 +64,8 @@ public class JWTService {
     }
 
     /**
-     * Returns a new refresh token for the user.
-     * @param user Entity of the user.
+     * Returns a new refresh token for the useractions.
+     * @param user Entity of the useractions.
      * @return generated refresh token.
      */
     public String generateRefreshToken(final UserEntity user) {
@@ -73,9 +73,9 @@ public class JWTService {
     }
 
     /**
-     * Generates a new token for the user
+     * Generates a new token for the useractions
      * @param tokentype type of the token wanted to generate refresh/access
-     * @param user Entity of the user
+     * @param user Entity of the useractions
      * @param expiration Expiration wanted for the token
      * @return generated token
      */
@@ -168,7 +168,7 @@ public class JWTService {
 
     /**
      * Verify that the token has a valid encryption, then gets his username. <br>
-     * It's the user's email in this application.
+     * It's the useractions's email in this application.
      * @param token with the username
      * @return the username as a String.
      */
@@ -195,9 +195,9 @@ public class JWTService {
     }
 
     /**
-     * Verify that the token has a valid encryption, then gets the user role.
+     * Verify that the token has a valid encryption, then gets the useractions role.
      * @param token with the info.
-     * @return the role of the user as a String.
+     * @return the role of the useractions as a String.
      */
     public String extractTokenUserRole(final String token) {
         Claims jwtToken = Jwts.parser().verifyWith(getSignInKey())
@@ -230,10 +230,10 @@ public class JWTService {
     }
 
     /**
-     * Verify that the token has a valid encryption, then gets the user username inside the app. <br>
+     * Verify that the token has a valid encryption, then gets the useractions username inside the app. <br>
      * <b>Not the token username!</b>.
      * @param token with the info.
-     * @return the username of the user as a String.
+     * @return the username of the useractions as a String.
      */
     private String extractTokenAppUsername(final String token) {
         Claims jwtToken = Jwts.parser().verifyWith(getSignInKey())

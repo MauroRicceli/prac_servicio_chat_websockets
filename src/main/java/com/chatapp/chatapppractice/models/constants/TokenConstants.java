@@ -5,7 +5,7 @@ public final class TokenConstants {
     private TokenConstants() { };
 
     /**
-     * Role of the user saved inside the token.
+     * Role of the useractions saved inside the token.
      */
     public static final String CLAIMS_USER_ROLE = "role";
     /**
@@ -13,7 +13,7 @@ public final class TokenConstants {
      */
     public static final String CLAIMS_TOKEN_TYPE = "type";
     /**
-     * Username of the user inside the application. Not the token username.
+     * Username of the useractions inside the application. Not the token username.
      */
     public static final String CLAIMS_USER_APP_USERNAME = "app_username";
     /**

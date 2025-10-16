@@ -1,9 +1,7 @@
-package com.chatapp.chatapppractice.controllers;
+package com.chatapp.chatapppractice.controllers.useractions;
 
 import com.chatapp.chatapppractice.models.dtos.userinteractiondtos.CreatePostDTO;
-import com.chatapp.chatapppractice.models.dtos.userinteractiondtos.FriendshipResponseDTO;
 import com.chatapp.chatapppractice.models.dtos.userinteractiondtos.PostResponseDTO;
-import com.chatapp.chatapppractice.services.userinteraction.UserFriendshipService;
 import com.chatapp.chatapppractice.services.userinteraction.UserPostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,28 +14,13 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api")
+public class PostController {
 
-    /**
-     * Service with all the logic needed to manage friendships.
-     */
-    private final UserFriendshipService userFriendshipService;
     /**
      * Service with all the logic needed to manage posts, comments and likes.
      */
     private final UserPostService userPostService;
-
-    /**
-     * Adds or removes a selected friend from the active user.
-     * @param selectedUserID if of the selected user for the action.
-     * @return DTO with info.
-     */
-    @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
-    @PostMapping("/friend/{selectedUserID}")
-    public ResponseEntity<FriendshipResponseDTO> manageFriend(final @PathVariable Long selectedUserID) {
-        return new ResponseEntity<>(userFriendshipService.manageFriends(selectedUserID), HttpStatus.CREATED);
-    }
 
     /**
      * Creates a new post associated with the active user.
@@ -45,7 +28,7 @@ public class UserController {
      * @return DTO with info.
      */
     @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
-    @PostMapping("/post")
+    @PostMapping("/user/post")
     public ResponseEntity<PostResponseDTO> createPost(final @Valid @RequestBody CreatePostDTO createPostDTO) {
         return new ResponseEntity<>(userPostService.createPost(createPostDTO), HttpStatus.CREATED);
     }
@@ -56,7 +39,7 @@ public class UserController {
      * @return DTO with info.
      */
     @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
-    @DeleteMapping("/post/{postId}")
+    @DeleteMapping("/user/post/{postId}")
     public ResponseEntity<PostResponseDTO> deletePost(final @PathVariable String postId) {
         return new ResponseEntity<>(userPostService.deletePost(postId), HttpStatus.NO_CONTENT);
     }
@@ -68,7 +51,7 @@ public class UserController {
      * @return DTO with info.
      */
     @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
-    @PutMapping("/post/{postId}")
+    @PutMapping("/user/post/{postId}")
     public ResponseEntity<PostResponseDTO> modifyPost(final @PathVariable String postId, final @RequestBody CreatePostDTO modifiedPostDTO) {
         return new ResponseEntity<>(userPostService.modifyPost(postId, modifiedPostDTO), HttpStatus.OK);
     }
@@ -78,7 +61,7 @@ public class UserController {
      * @return List of DTOs with every post info.
      */
     @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
-    @GetMapping("/post")
+    @GetMapping("/user/post")
     public ResponseEntity<List<PostResponseDTO>> getUserPosts() {
         return new ResponseEntity<>(userPostService.getUserPosts(), HttpStatus.OK);
     }

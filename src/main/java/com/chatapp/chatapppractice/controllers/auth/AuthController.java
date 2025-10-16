@@ -1,4 +1,4 @@
-package com.chatapp.chatapppractice.controllers;
+package com.chatapp.chatapppractice.controllers.auth;
 
 import com.chatapp.chatapppractice.models.dtos.authdtos.LoginRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.authdtos.RegisterRequestDTO;
@@ -23,9 +23,9 @@ public class AuthController {
     private final AuthService authService;
 
     /**
-     * Receives an DTO with the needed user data, registers the user if it doesn't exist and create his tokens.
-     * @param registerRequestDTO with the needed user data
-     * @return DTO with the user info and the generated tokens.
+     * Receives an DTO with the needed useractions data, registers the useractions if it doesn't exist and create his tokens.
+     * @param registerRequestDTO with the needed useractions data
+     * @return DTO with the useractions info and the generated tokens.
      */
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<AuthResponseDTO> register(@Valid @RequestBody final RegisterRequestDTO registerRequestDTO) {
@@ -33,9 +33,9 @@ public class AuthController {
     }
 
     /**
-     * Receives an DTO with the needed user data, logins the user and refresh his tokens if exists and the credentials matches.
-     * @param loginRequestDTO with the needed user data.
-     * @return DTO with the user info and refreshed tokens.
+     * Receives an DTO with the needed useractions data, logins the useractions and refresh his tokens if exists and the credentials matches.
+     * @param loginRequestDTO with the needed useractions data.
+     * @return DTO with the useractions info and refreshed tokens.
      */
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody final LoginRequestDTO loginRequestDTO) {
@@ -47,7 +47,7 @@ public class AuthController {
      * Refreshes the tokens if it's everything okay. <br>
      * Throws and exception if somemthing occurs.
      * @param authHeader with the prefix and token.
-     * @return DTO with the user info and refreshed tokens.
+     * @return DTO with the useractions info and refreshed tokens.
      */
     @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
     @GetMapping(value = "/refresh-tokens", produces = "application/json")

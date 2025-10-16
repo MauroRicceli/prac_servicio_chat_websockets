@@ -8,9 +8,9 @@ public final class TokenFactory {
     private TokenFactory() { };
 
     /**
-     * This method creates and return a token entity for the user with the given information.
-     * @param refreshToken refresh token generated for the user.
-     * @param userOwner user owner of the token.
+     * This method creates and return a token entity for the useractions with the given information.
+     * @param refreshToken refresh token generated for the useractions.
+     * @param userOwner useractions owner of the token.
      * @return TokenEntity with all the needed info.
      */
     public static TokenEntity createTokenEntity(final String refreshToken, final UserEntity userOwner) {

@@ -1,4 +1,4 @@
-package com.chatapp.chatapppractice.models.auxiliars;
+package com.chatapp.chatapppractice.models.utils;
 
 import com.chatapp.chatapppractice.models.constants.UserValidationsConstants;
 import com.chatapp.chatapppractice.models.enums.UserRole;

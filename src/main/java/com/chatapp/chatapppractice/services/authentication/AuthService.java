@@ -1,6 +1,6 @@
 package com.chatapp.chatapppractice.services.authentication;
 
-import com.chatapp.chatapppractice.models.auxiliars.Auth2UserInfo;
+import com.chatapp.chatapppractice.models.utils.Auth2UserInfo;
 import com.chatapp.chatapppractice.models.constants.ErrorMessagesConstants;
 import com.chatapp.chatapppractice.models.dtos.authdtos.LoginRequestDTO;
 import com.chatapp.chatapppractice.models.dtos.authdtos.RegisterRequestDTO;
@@ -28,7 +28,7 @@ public class AuthService {
      */
     private final UserRepository userRepository;
     /**
-     * Repository of the created tokens of every user.
+     * Repository of the created tokens of every useractions.
      */
     private final TokenRepository tokenRepository;
     /**
@@ -44,14 +44,14 @@ public class AuthService {
      */
     private final UserFactory userFactory;
     /**
-     * Service to manage user verifications in db.
+     * Service to manage useractions verifications in db.
      */
     private final UserVerificationService userVerificationService;
 
     /**
-     * Registers the user in registerDTO if it doesn't exist already.
-     * @param registerRequestDTO with data of the user.
-     * @throws UserAlreadyRegisteredException if the user it's already registered.
+     * Registers the useractions in registerDTO if it doesn't exist already.
+     * @param registerRequestDTO with data of the useractions.
+     * @throws UserAlreadyRegisteredException if the useractions it's already registered.
      * @return DTO with information
      */
     public AuthResponseDTO register(final RegisterRequestDTO registerRequestDTO) {
@@ -73,8 +73,8 @@ public class AuthService {
     }
 
     /**
-     * Registers a user in the database with oAuth2 data.
-     * @param auth2UserInfo Class with the user data.
+     * Registers a useractions in the database with oAuth2 data.
+     * @param auth2UserInfo Class with the useractions data.
      * @return DTO with information.
      */
     public AuthResponseDTO oAuth2Register(final Auth2UserInfo auth2UserInfo) {
@@ -92,8 +92,8 @@ public class AuthService {
     }
 
     /**
-     * Logs in the user in the DTO if it exists and his credentials matches.
-     * @param loginRequestDTO with data of the user.
+     * Logs in the useractions in the DTO if it exists and his credentials matches.
+     * @param loginRequestDTO with data of the useractions.
      * @return DTO with information
      */
     public AuthResponseDTO login(final LoginRequestDTO loginRequestDTO) {
@@ -117,8 +117,8 @@ public class AuthService {
     }
 
     /**
-     * Logs in with user info using oAuth2.
-     * @param auth2UserInfo Data of the user.
+     * Logs in with useractions info using oAuth2.
+     * @param auth2UserInfo Data of the useractions.
      * @return DTO with information.
      */
     public AuthResponseDTO oAuth2Login(final Auth2UserInfo auth2UserInfo) {
@@ -135,9 +135,9 @@ public class AuthService {
     }
 
     /**
-     * Refreshes the tokens of the user in the refresh token granted if
+     * Refreshes the tokens of the useractions in the refresh token granted if
      * its valid, invalidates the old ones.
-     * @param authHeader header with the refresh token of the user.
+     * @param authHeader header with the refresh token of the useractions.
      * @return DTO with information
      */
     public AuthResponseDTO refreshToken(final String authHeader) {
