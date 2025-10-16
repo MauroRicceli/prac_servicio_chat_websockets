@@ -26,7 +26,7 @@ public class LikeController {
      * @param postId id of the post wanted to like.
      * @return DTO with info of the liked post.
      */
-    @PutMapping("/post/{postId}/like")
+    @PutMapping("/user/posts/{postId}/likes")
     public ResponseEntity<PostResponseDTO> manageLikeOnPost(final @PathVariable String postId) {
 
         Tuple<PostResponseDTO, HttpStatus> response = userLikeService.manageLikeOnPost(postId);
@@ -40,7 +40,7 @@ public class LikeController {
      * @param commentId id of the comment wanted to like.
      * @return DTO with info of the post that contains that like.
      */
-    @PutMapping("/post/{postId}/{commentId}/like")
+    @PutMapping("/user/posts/{postId}/comments/{commentId}/likes")
     public ResponseEntity<PostResponseDTO> manageLikeOnComment(final @PathVariable String postId, final @PathVariable String commentId) {
         Tuple<PostResponseDTO, HttpStatus> response = userLikeService.manageLikeOnComment(postId, commentId);
         return new ResponseEntity<>(response.getFirstObject(), response.getSecondObject());
@@ -51,7 +51,7 @@ public class LikeController {
      * @param postId id of the post wanted to see his likes.
      * @return list of DTOs with every like info.
      */
-    @GetMapping("/post/{postId}")
+    @GetMapping("/posts/{postId}/likes")
     public ResponseEntity<List<LikeDTO>> getPostLikes(final @PathVariable String postId) {
         return new ResponseEntity<>(userLikeService.getPostLikes(postId), HttpStatus.OK);
     }
@@ -62,7 +62,7 @@ public class LikeController {
      * @param commentId id of the comment wanted to see his likes.
      * @return list of DTOs with every like info.
      */
-    @GetMapping("/post/{postId}/{commentId}")
+    @GetMapping("/posts/{postId}/comments/{commentId}/likes")
     public ResponseEntity<List<LikeDTO>> getPostCommentLikes(final @PathVariable String postId, final @PathVariable String commentId) {
         return new ResponseEntity<>(userLikeService.getPostCommentLikes(postId, commentId), HttpStatus.OK);
     }

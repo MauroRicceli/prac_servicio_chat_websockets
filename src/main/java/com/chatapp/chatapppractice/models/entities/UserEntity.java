@@ -41,6 +41,7 @@ public class UserEntity {
 
     @NotBlank
     @Size(min = UserValidationsConstants.MIN_SIZE_USERNAME, max = UserValidationsConstants.MAX_SIZE_USERNAME)
+    @Column(unique = true)
     private String username;
 
     //Para obligar en un futuro a cambiar el nombre de usuario desde el frontend al crear un usuario por oauth2.

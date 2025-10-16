@@ -27,7 +27,7 @@ public class FriendshipController {
      * @return DTO with info.
      */
     @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
-    @PostMapping("/friend/{selectedUserID}")
+    @PostMapping("/friends/{selectedUserID}")
     public ResponseEntity<FriendshipResponseDTO> manageFriend(final @PathVariable Long selectedUserID) {
         return new ResponseEntity<>(userFriendshipService.manageFriends(selectedUserID), HttpStatus.CREATED);
     }

@@ -28,7 +28,7 @@ public class PostController {
      * @return DTO with info.
      */
     @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
-    @PostMapping("/user/post")
+    @PostMapping("/user/posts")
     public ResponseEntity<PostResponseDTO> createPost(final @Valid @RequestBody CreatePostDTO createPostDTO) {
         return new ResponseEntity<>(userPostService.createPost(createPostDTO), HttpStatus.CREATED);
     }
@@ -39,7 +39,7 @@ public class PostController {
      * @return DTO with info.
      */
     @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
-    @DeleteMapping("/user/post/{postId}")
+    @DeleteMapping("/user/posts/{postId}")
     public ResponseEntity<PostResponseDTO> deletePost(final @PathVariable String postId) {
         return new ResponseEntity<>(userPostService.deletePost(postId), HttpStatus.NO_CONTENT);
     }
@@ -51,7 +51,7 @@ public class PostController {
      * @return DTO with info.
      */
     @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
-    @PutMapping("/user/post/{postId}")
+    @PutMapping("/user/posts/{postId}")
     public ResponseEntity<PostResponseDTO> modifyPost(final @PathVariable String postId, final @RequestBody CreatePostDTO modifiedPostDTO) {
         return new ResponseEntity<>(userPostService.modifyPost(postId, modifiedPostDTO), HttpStatus.OK);
     }
@@ -61,7 +61,7 @@ public class PostController {
      * @return List of DTOs with every post info.
      */
     @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
-    @GetMapping("/user/post")
+    @GetMapping("/user/posts")
     public ResponseEntity<List<PostResponseDTO>> getUserPosts() {
         return new ResponseEntity<>(userPostService.getUserPosts(), HttpStatus.OK);
     }
@@ -72,7 +72,7 @@ public class PostController {
      * @return DTO with post info.
      */
     @PreAuthorize("hasAnyRole('STANDARD', 'ADMIN')")
-    @GetMapping("/post/{postId}")
+    @GetMapping("/posts/{postId}")
     public ResponseEntity<PostResponseDTO> getPost(final @PathVariable String postId) {
         return new ResponseEntity<>(userPostService.getPost(postId), HttpStatus.OK);
     }
@@ -82,7 +82,7 @@ public class PostController {
      * @return List of DTOs with every post info.
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/post/all")
+    @GetMapping("/posts/all")
     public ResponseEntity<List<PostResponseDTO>> getAllPosts() {
         return new ResponseEntity<>(userPostService.getAllPosts(), HttpStatus.OK);
     }
