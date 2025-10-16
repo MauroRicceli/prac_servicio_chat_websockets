@@ -1,15 +1,15 @@
 package com.chatapp.chatapppractice.controllers.useractions;
 
+import com.chatapp.chatapppractice.models.dtos.userinteractiondtos.LikeDTO;
 import com.chatapp.chatapppractice.models.dtos.userinteractiondtos.PostResponseDTO;
 import com.chatapp.chatapppractice.models.utils.Tuple;
 import com.chatapp.chatapppractice.services.userinteraction.UserLikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -44,5 +44,26 @@ public class LikeController {
     public ResponseEntity<PostResponseDTO> manageLikeOnComment(final @PathVariable String postId, final @PathVariable String commentId) {
         Tuple<PostResponseDTO, HttpStatus> response = userLikeService.manageLikeOnComment(postId, commentId);
         return new ResponseEntity<>(response.getFirstObject(), response.getSecondObject());
+    }
+
+    /**
+     * Gets all the likes related to the selected post.
+     * @param postId id of the post wanted to see his likes.
+     * @return list of DTOs with every like info.
+     */
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<List<LikeDTO>> getPostLikes(final @PathVariable String postId) {
+        return new ResponseEntity<>(userLikeService.getPostLikes(postId), HttpStatus.OK);
+    }
+
+    /**
+     * Gets all the likes related to a comment in the selected post.
+     * @param postId id of the post that contains that comment.
+     * @param commentId id of the comment wanted to see his likes.
+     * @return list of DTOs with every like info.
+     */
+    @GetMapping("/post/{postId}/{commentId}")
+    public ResponseEntity<List<LikeDTO>> getPostCommentLikes(final @PathVariable String postId, final @PathVariable String commentId) {
+        return new ResponseEntity<>(userLikeService.getPostCommentLikes(postId, commentId), HttpStatus.OK);
     }
 }
